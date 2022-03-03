@@ -1,5 +1,5 @@
 
-
+//loop through the state.days array and check if it matches the day
 function getAppointmentsForDay(state, day) {
   let appoints = []
   let results = []
@@ -27,7 +27,7 @@ function getInterviewersForDay(state, day) {
   }
   return results;
 }
-
+//if appointment has an interview, return a formatted interview object
 function getInterview(state, interview) {
   if (!interview) {
     return null

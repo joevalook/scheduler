@@ -12,7 +12,6 @@ import Confirm from './Confirm';
 // import { tsPropertySignature } from '@babel/types';
 
 export default function Appointment (props) {
-  console.log("this is the key", props.id);
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -23,11 +22,11 @@ export default function Appointment (props) {
   const ERROR_DELETE = "ERROR_DELETE";
   const ERROR_INVALID = "ERROR_INVALID";
   const CONFIRM = "CONFIRM"
+  //call mode hook to keep track of what kind of visual should be displayed
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
   function save(name, interviewer) {
-    console.log("save function invoked")
     if (interviewer) {
     const interview = {
       student: name,
@@ -40,6 +39,7 @@ export default function Appointment (props) {
       .then(() => {transition(SHOW)})
       .catch((err) => transition(ERROR_SAVE, true))
     }
+    //stretch -- added a mode where the user will be shown an error if an interviewer is not chosen
     else{
       transition(ERROR_INVALID)
     }
@@ -89,7 +89,7 @@ export default function Appointment (props) {
         <Form
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}
-        onCancel={() => back}
+        onCancel={back}
         interviewers = {props.interviewers}
         onSave = {save}
       />

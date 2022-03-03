@@ -8,6 +8,8 @@ import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "help
 
 
 export default function Application(props) {
+  // call useApplicationData hook 
+  
   const {
     state,
     setDay,
@@ -15,9 +17,10 @@ export default function Application(props) {
     deleteInterview
   } = useApplicationData();
 
+  //filter functions to get all appointments/interviewers for day
   const dailyAppointments = getAppointmentsForDay(state, state.day)
-  console.log(dailyAppointments)
   const dailyInterviewers = getInterviewersForDay(state, state.day)
+  //create an array of appointments using props from both dailyAppointments and dailyInterviewers
   const mappedAppointments= dailyAppointments.map((appointment) => {
     return (
       <Appointment
@@ -31,7 +34,7 @@ export default function Application(props) {
       />
     );
   });
-  console.log(state.appointments);
+  //format the appointments page and called mappedAppointments to generate appointment slots
   return (
     <main className="layout">
       <section className="sidebar">
@@ -43,7 +46,6 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            key = {state.day}
             days={state.days}
             value={state.day}
             onChange={setDay}

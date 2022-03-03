@@ -28,7 +28,7 @@ export default function Appointment (props) {
   );
   function save(name, interviewer) {
     console.log("save function invoked")
-    if (name && interviewer) {
+    if (interviewer) {
     const interview = {
       student: name,
       interviewer
@@ -101,7 +101,7 @@ export default function Appointment (props) {
                           message="Could not save appointment."
                           onClose={back}/>}
       {mode === ERROR_INVALID && <Error 
-                          message="Invalid, you must enter a name and an interviewer to proceed"
+                          message="Invalid, you must select an interviewer to proceed"
                           onClose={back}/>}
 
     </article>

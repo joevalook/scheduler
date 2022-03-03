@@ -9,7 +9,7 @@ import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "help
 
 export default function Application(props) {
   // call useApplicationData hook 
-  
+
   const {
     state,
     setDay,
@@ -18,10 +18,10 @@ export default function Application(props) {
   } = useApplicationData();
 
   //filter functions to get all appointments/interviewers for day
-  const dailyAppointments = getAppointmentsForDay(state, state.day)
-  const dailyInterviewers = getInterviewersForDay(state, state.day)
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
   //create an array of appointments using props from both dailyAppointments and dailyInterviewers
-  const mappedAppointments= dailyAppointments.map((appointment) => {
+  const mappedAppointments = dailyAppointments.map((appointment) => {
     return (
       <Appointment
         key={appointment.id}
@@ -60,8 +60,8 @@ export default function Application(props) {
       <section className="schedule">
         {mappedAppointments}
         <Appointment key="last" time="5pm" />
-      </section> 
+      </section>
     </main>
-    
+
   );
 }

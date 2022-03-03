@@ -11,7 +11,7 @@ import Confirm from './Confirm';
 
 // import { tsPropertySignature } from '@babel/types';
 
-export default function Appointment (props) {
+export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -21,43 +21,43 @@ export default function Appointment (props) {
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
   const ERROR_INVALID = "ERROR_INVALID";
-  const CONFIRM = "CONFIRM"
+  const CONFIRM = "CONFIRM";
   //call mode hook to keep track of what kind of visual should be displayed
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
   function save(name, interviewer) {
     if (interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-    console.log(interview)
-    transition(SAVING)
-    console.log(props.id)
-    props.bookInterview(props.id, interview)
-      .then(() => {transition(SHOW)})
-      .catch((err) => transition(ERROR_SAVE, true))
+      const interview = {
+        student: name,
+        interviewer
+      };
+      console.log(interview);
+      transition(SAVING);
+      console.log(props.id);
+      props.bookInterview(props.id, interview)
+        .then(() => { transition(SHOW); })
+        .catch((err) => transition(ERROR_SAVE, true));
     }
     //stretch -- added a mode where the user will be shown an error if an interviewer is not chosen
-    else{
-      transition(ERROR_INVALID)
+    else {
+      transition(ERROR_INVALID);
     }
   }
   function deleted() {
-    console.log(props.id)
-    transition(DELETING, true)
+    console.log(props.id);
+    transition(DELETING, true);
     props.deleteInterview(props.id)
-      .then(() => {transition(EMPTY)})
-      .catch((err) => transition(ERROR_DELETE, true))
+      .then(() => { transition(EMPTY); })
+      .catch((err) => transition(ERROR_DELETE, true));
   }
   function edit() {
-    transition(EDIT)
+    transition(EDIT);
   }
   function deleting() {
-    transition(CONFIRM)
+    transition(CONFIRM);
   }
-  return(
+  return (
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -65,45 +65,45 @@ export default function Appointment (props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onDelete = {deleting}
-          onEdit = {edit}
+          onDelete={deleting}
+          onEdit={edit}
         />
       )}
       {mode === CREATE && (
         <Form
-        onCancel={back}
-        interviewers = {props.interviewers}
-        onSave = {save}
-      />
+          onCancel={back}
+          interviewers={props.interviewers}
+          onSave={save}
+        />
       )}
-      {mode === SAVING && <Status  message="Saving"/>}
+      {mode === SAVING && <Status message="Saving" />}
       {mode === CONFIRM && (
-        <Confirm  
-        message="Are you sure you would like to delete?"
-        onConfirm={deleted}
-        onCancel={back}
-      />
+        <Confirm
+          message="Are you sure you would like to delete?"
+          onConfirm={deleted}
+          onCancel={back}
+        />
       )}
-      {mode === DELETING && <Status  message="Deleting"/>}
+      {mode === DELETING && <Status message="Deleting" />}
       {mode === EDIT && (
         <Form
-        student={props.interview.student}
-        interviewer={props.interview.interviewer.id}
-        onCancel={back}
-        interviewers = {props.interviewers}
-        onSave = {save}
-      />
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+          onCancel={back}
+          interviewers={props.interviewers}
+          onSave={save}
+        />
       )}
-      {mode === ERROR_DELETE && <Error 
-                          message="Could not delete appointment."
-                          onClose={back}/>}
-      {mode === ERROR_SAVE && <Error 
-                          message="Could not save appointment."
-                          onClose={back}/>}
-      {mode === ERROR_INVALID && <Error 
-                          message="Invalid, you must select an interviewer to proceed"
-                          onClose={back}/>}
+      {mode === ERROR_DELETE && <Error
+        message="Could not delete appointment."
+        onClose={back} />}
+      {mode === ERROR_SAVE && <Error
+        message="Could not save appointment."
+        onClose={back} />}
+      {mode === ERROR_INVALID && <Error
+        message="Invalid, you must select an interviewer to proceed"
+        onClose={back} />}
 
     </article>
-  )
+  );
 }
